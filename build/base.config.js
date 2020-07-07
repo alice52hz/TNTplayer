@@ -7,7 +7,7 @@ function getPath(p) {
 
 module.exports = {
     entry: {
-        player: getPath('platform/index.js'),
+        player: getPath('tnt/index.js'),
         core: getPath('core/index.js')
     },
     output: {
