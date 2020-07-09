@@ -1,0 +1,243 @@
+
+@controlsHeight: 4px;
+@animateTime: .1s;
+@hoverHeight: 16px;
+@timeBoxHeight: 20px;
+@ctrlHeight: 50px;
+
+.ct {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.player_box--controls {
+    height: @ctrlHeight;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    transition: height @animateTime linear;
+}
+
+.player_box--controls .ctrl_el--box {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    .ctrl_box--progress {
+        width: 100%;
+        height: @controlsHeight;
+        background: rgba(255, 255, 255, 0.3);
+        position: absolute;
+        left: 0;
+        top: -@controlsHeight;
+        transition: all @animateTime linear;
+        cursor: pointer;
+        .ctrl_progress--loaded {
+            z-index: 30;
+            width: 0;
+            height: 100%;
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: rgba(255, 255, 255, 0.3);
+        }
+        .ctrl_progress--pointer {
+            z-index: 45;
+            display: none;
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 0;
+            height: 100%;
+            border-right: 1px solid #fff;
+            .ctrl_box--time {
+                user-select: none;
+                position: absolute;
+                width: 60px;
+                right: -30px;
+                height: @timeBoxHeight;
+                line-height: @timeBoxHeight;
+                top: -(@timeBoxHeight);
+                font-size: 12px;
+                background: rgba(0, 0, 0, 0.5);
+                border-radius: 2px;
+                text-align: center;
+                color: #fff;
+            }
+        }
+        .ctrl_progress--played {
+            z-index: 40;
+            width: 0;
+            height: 100%;
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: #399;
+            .ctrl_progress--cursor {
+                z-index: 50;
+                width: @controlsHeight;
+                height: 100%;
+                border-radius: 50%;
+                position: absolute;
+                right: -@controlsHeight / 2;
+                top: 0;
+                background: #fff;
+                opacity: 0;
+                transition: 
+                    opacity @animateTime linear, 
+                    width @animateTime linear, 
+                    height @animateTime linear, 
+                    right @animateTime linear;
+                cursor: pointer;
+                &:hover {
+                    box-shadow: 
+                        5px 5px 10px #399,
+                        -5px 5px 10px #399,
+                        5px -5px 10px #399,
+                        -5px -5px 10px #399;
+                }
+            }
+        }
+    }
+    .ctrl_box--progress:hover {
+        height: @hoverHeight;
+        top: -@hoverHeight;
+        .ctrl_progress--cursor {
+            opacity: 1;
+            width: @hoverHeight;
+            right: -@hoverHeight / 2;
+        }
+        .ctrl_progress--pointer {
+            display: block;
+        }
+    }
+}
+
+.ctrl_el--box .ctrl_box--ctrl {
+    color: #fff;
+    height: @ctrlHeight;
+    overflow: hidden;
+    width: 100%;
+    display: flex;
+    transition: height @animateTime linear;
+    &>div:nth-child(2) {
+        flex-grow: 1;
+        width: 0;
+        display: flex;
+        align-items: center;
+        .ctrl_time--info {
+            display: flex;
+            &>div:nth-child(2) {
+                margin: 0 3px;
+            }
+            .time {
+                width: 38px;
+                font-size: 14px;
+            }
+        }
+    }
+    .ctrl_box--play {
+        .ct();
+        width: @ctrlHeight;
+        .ctrl_item--play {
+            display: none;
+        }
+    }
+    .ctrl_obx--option {
+        &>div {
+            height: @ctrlHeight;
+            line-height: @ctrlHeight;
+        }
+        height: @ctrlHeight;
+        display: flex;
+        align-items: center;
+        .ctrl_fullscreen--exit {
+            display: none;
+        }
+        .ctrl_box--volume {
+            height: 100%;
+            .ct();
+        }
+        .ctrl_box--volume>div {
+            user-select: none;
+            height: 30px;
+            display: flex;
+            transition: width @animateTime linear, background @animateTime linear;
+            border-radius: 15px;
+            overflow: hidden;
+            width: 30px;
+            background: #333;
+            &:hover {
+                width: 150px;
+                background: #333;
+                &>div:first-child {
+                    width: 120px;
+                    overflow: hidden;
+                }
+            }
+            &>div:first-child {
+                transition: width @animateTime linear;
+                width: 0;
+                overflow: hidden;
+                flex-grow: 1;
+                .ct();
+                .volume_line--outbox {
+                    transition: width @animateTime linear;
+                    width: 80%;
+                    height: 4px;
+                    border-radius: 2px;
+                    background: #222;
+                    cursor: pointer;
+                    .volume_line--innerbox {
+                        border-radius: 2px;
+                        position: relative;
+                        width: 50%;
+                        height: 100%;
+                        background: #eee;
+                        .volume_line--cursor {
+                            opacity: 0;
+                            right: -6px;
+                            top: -4px;
+                            position: absolute;
+                            width: 12px;
+                            height: 12px;
+                            background: #fff;
+                            border-radius: 50%;
+                            cursor: pointer;
+                            &:hover {
+                                box-shadow: 
+                                    2px 2px 5px #fff,
+                                    -3px 2px 5px #fff,
+                                    2px -2px 5px #fff,
+                                    -2px -2px 5px #fff;
+                            }
+                        }
+                    }
+                }
+                &:hover {
+                    .volume_line--cursor {
+                        opacity: 1 !important;
+                    }
+                }
+            }
+            &>div:last-child {
+                cursor: pointer;
+                .ct();
+                width: 30px;
+                justify-content: center;
+            }
+            .volume_muted--false {
+                display: none;
+            }
+
+            .volume_muted--true, .volume_muted--false {
+                width: 100%;
+                height: 100%;
+                text-align: center;
+                line-height: 30px;
+            }
+        }
+    }
+}
