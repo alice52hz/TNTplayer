@@ -33,7 +33,7 @@ const player = new TNTplayer(config)
 
 ## Build system(webpack)
 
-
+- Different build command for build make sure it is flexable
 
 ## Why *TNT*
 
