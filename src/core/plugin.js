@@ -93,7 +93,7 @@ export default class Plugin {
     _handleEvent() {
         const listeners = this._opts.on || {}
         const onceListeners = this._opts.once || {}
-        //  Add listeners to playe
+        //  Add listeners to player
         for(const evt in listeners) {
             if(VIDEO_EVENT_LIST.includes(evt) || USER_EVENT_LIST.includes(evt)) {
                 this.player.on(evt, listeners[evt], {
