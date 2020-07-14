@@ -5,16 +5,23 @@
 
 ## Features
 
-- Support hls or flv stream on PC end(browser on PC can't support hls/rtmp stream naturally)
+- Multiple video stream like hls or rtmp can be support by TNTplayer (extension: m3u8/mp4/flv etc.)
+- Component video player, the core of player supply basic ability of video player, and business is achieve by plugins
+- It supply a plug-in mechanisms to keep the extensibility of player
+- Interaction between components was Implement by event system witch base on Observer Pattern
+- Player support lifecycle function, it make plugin can control video exactly at different moment
+- It will judge is necessary to pack hls.js/flv.js via the command, this can ensure player have a small size
+- Multiple versions can be generate by different commands in order to increase flexibility of player
 
-## Getting Started
+## Usage
 
 1.Used in modular system(like webpack)
 
 ```js
 import TNTplayer from 'TNTplayer'
 const config = {
-    //	options
+    wrapper: '#video_box',
+    //	...other options
 }
 const player = new Player(config)
 ```
@@ -25,22 +32,50 @@ const player = new Player(config)
 <script src="TNTplayer.js"></script>
 <script>
 const config = {
-    //	options
+    wrapper: '#video_box',
+    //	...other options
 }
 const player = new TNTplayer(config)
 </script>
 ```
 
-## Build system(webpack)
+## Build
 
-- Different build command for build make sure it is flexable
+Different build command is supplied to keep flexibility of player
+
+```js
+"scripts": {
+    "build:all": "npm run build && npm run build:uncop",
+    "build": "npm run build:pc && npm run build:mobile",
+    "build:pc": "cross-env PLATFORM=pc node build/build.js",
+    "build:mobile": "cross-env PLATFORM=mobile node build/build.js",
+    "build:uncop": "npm run build:pc:uncop && npm run build:mobile:uncop",
+    "build:pc:uncop": "cross-env PLATFORM=pc node build/build.uncompressed.js",
+    "build:mobile:uncop": "cross-env PLATFORM=mobile node build/build.uncompressed.js",
+    "dev:core": "cross-env PLATFORM=pc node build/dev.core.js",
+    "dev:player": "cross-env PLATFORM=pc node build/dev.player.js",
+    "dev": "npm run dev:core"
+}
+```
+
+Some common commands
+
+| commands             | description                                        |
+| -------------------- | -------------------------------------------------- |
+| npm run build:all    | build all versions of player                       |
+| npm run build        | build version that compressed                      |
+| npm run build:pc     | build version with hls.js/flv.js                   |
+| npm run build:mobile | build version without hls.js/flv.js                |
+| npm run build:uncop  | build version that uncompressed                    |
+| npm run dev:core     | start a dev-server and used for core development   |
+| npm run dev:player   | start a dev-server and used for player development |
 
 ## Why *TNT*
 
-I hope the player will be small and beatiful in size, and big and powerful in engey. Just like TNT. :-)
+I hope the player will be small and beautiful in size,  dazzling and powerful in performance.  Just like TNT. :-)
 
 ## License
 
-MIT
+[MIT](http://opensource.org/licenses/MIT)
 
-copyright (c) alice52hz 2020~present
+Copyright (c) 2020~present alice52hz 
